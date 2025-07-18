@@ -1,0 +1,42 @@
+
+# --//[ESSENTIAL IMPORTS]\\--
+pass
+
+# --//[LIBRARY IMPORTS]\\--
+import Libraries.TerminalService as tservice
+import Libraries.FileService as fservice
+import Libraries.SheetService as sservice
+
+# --//[CODE STARTS HERE]\\--
+def main():
+    # --//[SETUP TERMINAL]\\--
+    tservice.clearTerminal()
+    tservice.header("MAILBOT TERMINAL SERVICE")
+    tservice.emptyLine()
+
+    # --//[CHOOSING PROGRAM OPTIONS]\\--
+    program_options = [
+        "Send 1. Mail",
+        "Send 2. Mail ",
+        "Send 3. Mail",
+        "Review Answers"
+    ]
+
+    program_option_selected = tservice.chooseOption(
+        "Please select a program option:",
+        program_options
+    )
+    tservice.emptyLine()
+    tservice.clearTerminal()
+
+    # --//[CHOOSING A CSV FILE]\\--
+    csv_file_path = fservice.askOpenFile()
+
+    # --//[CONVERTING CSV TO CONTACTS]\\--
+    contacts = sservice.convertCSVPathToContacts(csv_file_path)
+    print("Contacts:")
+    for contact in contacts:
+        print(f"{contact.FirstName} {contact.LastName} - {contact.Email} - Status: {contact.Status}")
+
+if __name__ == "__main__":
+    main()
