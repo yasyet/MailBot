@@ -1,17 +1,17 @@
-
 # --//[ESSENTIAL IMPORTS]\\--
 import csv
+import os
 
 # --//[CONTACT CLASS]\\--
 class Contact:
-    def __init__(self, _Company, _FirstName, _LastName, _Email, _Title, _Status, _LinkedIn):
+    def __init__(self, _Company, _FirstName, _LastName, _Email, _Title, _LinkedIn, _Status):
         self.Company = _Company
         self.FirstName = _FirstName
         self.LastName = _LastName
         self.Email = _Email
         self.Title = _Title
-        self.Status = _Status
         self.LinkedIn = _LinkedIn
+        self.Status = _Status
 
     def getStatus(self) -> tuple:
         # --//[EVALUATE STATUS]\\--
@@ -32,7 +32,7 @@ class Contact:
         return (False, None)
     
 
-def createContact(_Company, _FirstName, _LastName, _Email, _Title, _Status) -> Contact:
+def createContact(_Company, _FirstName, _LastName, _Email, _Title, _LinkedIn, _Status) -> Contact:
     """
     Creates a new contact with the provided details.
     
@@ -44,7 +44,7 @@ def createContact(_Company, _FirstName, _LastName, _Email, _Title, _Status) -> C
     :param _Status: The status of the contact.
     :return: A Contact object with the provided details.
     """
-    return Contact(_Company, _FirstName, _LastName, _Email, _Title, _Status)
+    return Contact(_Company, _FirstName, _LastName, _Email, _Title, _LinkedIn, _Status)
 
 def convertCSVPathToContacts(filePath: str) -> list:
     """
@@ -57,16 +57,16 @@ def convertCSVPathToContacts(filePath: str) -> list:
     contacts = []
     
     with open(filePath, mode='r', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
+        reader = csv.DictReader(csvfile)        
+        for i, row in enumerate(reader):            
             contact = createContact(
-                _Company=row['Company'],
-                _FirstName=row['First Name'],
-                _LastName=row['Last Name'],
-                _Email=row['Email'],
-                _Title=row['Title'],
-                _Status='-',
-                _LinkedIn=row['Person Linkedin Url']
+                _Company=row.get('Company', ''),
+                _FirstName=row.get('First Name', ''),
+                _LastName=row.get('Last Name', ''),
+                _Email=row.get('Email', ''),
+                _Title=row.get('Title', ''),
+                _LinkedIn=row.get('Person Linkedin Url', ''),
+                _Status='-'
             )
             contacts.append(contact)
     
@@ -80,10 +80,16 @@ def appendContactsToCSV(filePath: str, contacts: list) -> None:
     :param contacts: A list of Contact objects to append.
     """
     
+    # Check if file exists and has content
+    file_exists = os.path.exists(filePath) and os.path.getsize(filePath) > 0
+    
     with open(filePath, mode='a', encoding='utf-8', newline='') as csvfile:
-        fieldnames = ['Company', 'First Name', 'Last Name', 'Email', 'Title', 'Status', 'LinkedIn']
+        fieldnames = ['Company', 'First Name', 'Last Name', 'Email', 'Title', 'LinkedIn', 'Status']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
+        if not file_exists:
+            writer.writeheader()
+
         for contact in contacts:
             writer.writerow({
                 'Company': contact.Company,
@@ -91,8 +97,8 @@ def appendContactsToCSV(filePath: str, contacts: list) -> None:
                 'Last Name': contact.LastName,
                 'Email': contact.Email,
                 'Title': contact.Title,
-                'Status': contact.Status,
-                'LinkedIn': contact.LinkedIn
+                'LinkedIn': contact.LinkedIn,
+                'Status': contact.Status
             })
     
     return None

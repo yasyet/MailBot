@@ -27,16 +27,17 @@ def main():
         program_options
     )
     tservice.emptyLine()
-    tservice.clearTerminal()
 
     # --//[CHOOSING A CSV FILE]\\--
     csv_file_path = fservice.askOpenFile()
 
     # --//[CONVERTING CSV TO CONTACTS]\\--
     contacts = sservice.convertCSVPathToContacts(csv_file_path)
-    print("Contacts:")
-    for contact in contacts:
-        print(f"{contact.FirstName} {contact.LastName} - {contact.Email} - Status: {contact.Status}")
+    tservice.emptyLine()
+    print(f"Found {len(contacts)} contacts in the CSV file: {csv_file_path}")
+    tservice.emptyLine()
+
+    
 
 if __name__ == "__main__":
     main()
