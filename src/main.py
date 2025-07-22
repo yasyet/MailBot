@@ -26,7 +26,6 @@ def main():
         "Please select a program option:",
         program_options
     )
-    tservice.emptyLine()
 
     # --//[CHOOSING A CSV FILE]\\--
     csv_file_path = fservice.askOpenFile()
@@ -36,8 +35,9 @@ def main():
     tservice.emptyLine()
     print(f"Found {len(contacts)} contacts in the CSV file: {csv_file_path}")
     tservice.emptyLine()
-
-    
+    print("First 5 contacts:")
+    for contact in contacts[:5]:
+        print(f" - {contact}")
 
 if __name__ == "__main__":
     main()

@@ -31,6 +31,8 @@ class Contact:
         raise ValueError("Invalid status value")
         return (False, None)
     
+    def __str__(self):
+        return f"{self.FirstName} {self.LastName} ({self.Email}) - {self.Company} - {self.Title} - {self.LinkedIn} - {self.Status}"
 
 def createContact(_Company, _FirstName, _LastName, _Email, _Title, _LinkedIn, _Status) -> Contact:
     """
@@ -53,22 +55,32 @@ def convertCSVPathToContacts(filePath: str) -> list:
     :param filePath: The path to the CSV file.
     :return: A list of Contact objects.
     """
-    
     contacts = []
     
-    with open(filePath, mode='r', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)        
-        for i, row in enumerate(reader):            
-            contact = createContact(
-                _Company=row.get('Company', ''),
-                _FirstName=row.get('First Name', ''),
-                _LastName=row.get('Last Name', ''),
-                _Email=row.get('Email', ''),
-                _Title=row.get('Title', ''),
-                _LinkedIn=row.get('Person Linkedin Url', ''),
-                _Status='-'
-            )
-            contacts.append(contact)
+    try:
+        with open(filePath, mode='r', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile, delimiter=';')        
+            for i, row in enumerate(reader):
+                try:                        
+                    contact = createContact(
+                        _Company=row.get('Company', '').strip(),
+                        _FirstName=row.get('First Name', '').strip(),
+                        _LastName=row.get('Last Name', '').strip(),
+                        _Email=row.get('Email', '').strip(),
+                        _Title=row.get('Title', '').strip(),
+                        _LinkedIn=row.get('LinkedIn', '').strip(),
+                        _Status=row.get('Status', '-').strip()
+                    )
+                    contacts.append(contact)
+                except Exception as e:
+                    print(f"Error processing row {i+1}: {e}")
+                    continue
+    except FileNotFoundError:
+        print(f"File not found: {filePath}")
+        return []
+    except Exception as e:
+        print(f"Error reading CSV file: {e}")
+        return []
     
     return contacts
 
@@ -85,7 +97,7 @@ def appendContactsToCSV(filePath: str, contacts: list) -> None:
     
     with open(filePath, mode='a', encoding='utf-8', newline='') as csvfile:
         fieldnames = ['Company', 'First Name', 'Last Name', 'Email', 'Title', 'LinkedIn', 'Status']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
         
         if not file_exists:
             writer.writeheader()
