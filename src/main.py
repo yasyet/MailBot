@@ -36,9 +36,6 @@ def main():
     print(f"Found {len(contacts)} contacts in the CSV file: {csv_file_path}")
     print(f"First contact: {contacts[0].name()}")
     tservice.emptyLine()
-
-    def 
-
-
+    
 if __name__ == "__main__":
     main()
