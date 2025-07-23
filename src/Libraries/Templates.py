@@ -2,45 +2,65 @@
 from typing import Tuple
 
 # --//[TEMPLATE API]\\--
-def get_initial_email_template(variant: int) -> Tuple[str, str]:
+def get_initial_email_template(
+    variant: int,
+    sender_name: str,
+    recipient_name: str,
+    company_name: str,
+    discovery_method: str,
+    linkedin_profile_link: str
+) -> Tuple[str, str]:
     if variant == 1:
-        return initial_email_variant_one
+        return initial_email_variant_one(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link)
     elif variant == 2:
-        return initial_email_variant_two
+        return initial_email_variant_two(sender_name, recipient_name, discovery_method, linkedin_profile_link)
     elif variant == 3:
-        return initial_email_variant_three
+        return initial_email_variant_three(sender_name, recipient_name, discovery_method, linkedin_profile_link)
     elif variant == 4:
-        return initial_email_variant_four
+        return initial_email_variant_four(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link)
     elif variant == 5:
-        return initial_email_variant_five
+        return initial_email_variant_five(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link)
     else:
         raise ValueError("Invalid template number.")
-    
-def get_follow_up_one_template(variant: int) -> Tuple[str, str]:
+
+def get_follow_up_one_template(
+    variant: int,
+    sender_name: str,
+    recipient_name: str,
+    company_name: str = "",
+    initial_send_date: str = "",
+    linkedin_profile_link: str = ""
+) -> Tuple[str, str]:
     if variant == 1:
-        return follow_up_one_variant_one
+        return follow_up_one_variant_one(sender_name, recipient_name, company_name, initial_send_date, linkedin_profile_link)
     elif variant == 2:
-        return follow_up_one_variant_two
+        return follow_up_one_variant_two(sender_name, recipient_name, company_name, linkedin_profile_link)
     elif variant == 3:
-        return follow_up_one_variant_three
+        return follow_up_one_variant_three(sender_name, recipient_name, linkedin_profile_link)
     elif variant == 4:
-        return follow_up_one_variant_four
+        return follow_up_one_variant_four(sender_name, recipient_name, company_name, linkedin_profile_link)
     elif variant == 5:
-        return follow_up_one_variant_five
+        return follow_up_one_variant_five(sender_name, recipient_name, linkedin_profile_link)
     else:
         raise ValueError("Invalid variant number.")
-    
-def get_follow_up_two_template(variant: int) -> Tuple[str, str]:
+
+def get_follow_up_two_template(
+    variant: int,
+    sender_name: str,
+    recipient_name: str,
+    company_name: str = "",
+    linkedin_profile_link: str = ""
+) -> Tuple[str, str]:
     if variant == 1:
-        return follow_up_two_variant_one
+        return follow_up_two_variant_one(sender_name, recipient_name, company_name, linkedin_profile_link)
     elif variant == 2:
-        return follow_up_two_variant_two
+        return follow_up_two_variant_two(sender_name, recipient_name, linkedin_profile_link)
     elif variant == 3:
-        return follow_up_two_variant_three
+        return follow_up_two_variant_three(sender_name, recipient_name, company_name, linkedin_profile_link)
     elif variant == 4:
-        return follow_up_two_variant_four
+        return follow_up_two_variant_four(sender_name, recipient_name, company_name, linkedin_profile_link)
     elif variant == 5:
-        return follow_up_two_variant_five
+        return follow_up_two_variant_five(sender_name, recipient_name, company_name, linkedin_profile_link)
     else:
         raise ValueError("Invalid variant number.")
 
