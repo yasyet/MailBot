@@ -1,68 +1,48 @@
 # --//[ESSENTIAL IMPORTS]\\--
 from typing import Tuple
 
+# --//[LIBRARY IMPORTS]\\--
+from Libraries.SheetService import Contact
+
 # --//[TEMPLATE API]\\--
-def get_initial_email_template(
-    variant: int,
-    sender_name: str,
-    recipient_name: str,
-    company_name: str,
-    discovery_method: str,
-    linkedin_profile_link: str
-) -> Tuple[str, str]:
-    if variant == 1:
-        return initial_email_variant_one(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link)
-    elif variant == 2:
-        return initial_email_variant_two(sender_name, recipient_name, discovery_method, linkedin_profile_link)
-    elif variant == 3:
-        return initial_email_variant_three(sender_name, recipient_name, discovery_method, linkedin_profile_link)
-    elif variant == 4:
-        return initial_email_variant_four(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link)
-    elif variant == 5:
-        return initial_email_variant_five(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link)
-    else:
-        raise ValueError("Invalid template number.")
+def get_email_template(status_index: int, contact: Contact, variant: int, sender_name: str, discovery_method: str, linkedin_profile_link: str) -> Tuple[str, str]:
+    recipient_name = contact.name()
+    company_name = contact.Company
 
-def get_follow_up_one_template(
-    variant: int,
-    sender_name: str,
-    recipient_name: str,
-    company_name: str = "",
-    initial_send_date: str = "",
-    linkedin_profile_link: str = ""
-) -> Tuple[str, str]:
-    if variant == 1:
-        return follow_up_one_variant_one(sender_name, recipient_name, company_name, initial_send_date, linkedin_profile_link)
-    elif variant == 2:
-        return follow_up_one_variant_two(sender_name, recipient_name, company_name, linkedin_profile_link)
-    elif variant == 3:
-        return follow_up_one_variant_three(sender_name, recipient_name, linkedin_profile_link)
-    elif variant == 4:
-        return follow_up_one_variant_four(sender_name, recipient_name, company_name, linkedin_profile_link)
-    elif variant == 5:
-        return follow_up_one_variant_five(sender_name, recipient_name, linkedin_profile_link)
-    else:
-        raise ValueError("Invalid variant number.")
+    initial_templates = [
+        lambda: initial_email_variant_one(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
+        lambda: initial_email_variant_two(sender_name, recipient_name, discovery_method, linkedin_profile_link),
+        lambda: initial_email_variant_three(sender_name, recipient_name, discovery_method, linkedin_profile_link),
+        lambda: initial_email_variant_four(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
+        lambda: initial_email_variant_five(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
+    ]
 
-def get_follow_up_two_template(
-    variant: int,
-    sender_name: str,
-    recipient_name: str,
-    company_name: str = "",
-    linkedin_profile_link: str = ""
-) -> Tuple[str, str]:
-    if variant == 1:
-        return follow_up_two_variant_one(sender_name, recipient_name, company_name, linkedin_profile_link)
-    elif variant == 2:
-        return follow_up_two_variant_two(sender_name, recipient_name, linkedin_profile_link)
-    elif variant == 3:
-        return follow_up_two_variant_three(sender_name, recipient_name, company_name, linkedin_profile_link)
-    elif variant == 4:
-        return follow_up_two_variant_four(sender_name, recipient_name, company_name, linkedin_profile_link)
-    elif variant == 5:
-        return follow_up_two_variant_five(sender_name, recipient_name, company_name, linkedin_profile_link)
-    else:
-        raise ValueError("Invalid variant number.")
+    follow_up_one_templates = [
+        lambda: follow_up_one_variant_one(sender_name, recipient_name, company_name, contact.Status, linkedin_profile_link),
+        lambda: follow_up_one_variant_two(sender_name, recipient_name, company_name, linkedin_profile_link),
+        lambda: follow_up_one_variant_three(sender_name, recipient_name, linkedin_profile_link),
+        lambda: follow_up_one_variant_four(sender_name, recipient_name, company_name, linkedin_profile_link),
+        lambda: follow_up_one_variant_five(sender_name, recipient_name, linkedin_profile_link),
+    ]
+
+    follow_up_two_templates = [
+        lambda: follow_up_two_variant_one(sender_name, recipient_name, company_name, linkedin_profile_link),
+        lambda: follow_up_two_variant_two(sender_name, recipient_name, company_name, linkedin_profile_link),
+        lambda: follow_up_two_variant_three(sender_name, recipient_name, company_name, linkedin_profile_link),
+        lambda: follow_up_two_variant_four(sender_name, recipient_name, company_name, linkedin_profile_link),
+        lambda: follow_up_two_variant_five(sender_name, recipient_name, company_name, linkedin_profile_link),
+    ]
+
+    templates_by_status = [
+        initial_templates,
+        follow_up_one_templates,
+        follow_up_two_templates
+    ]
+
+    try:
+        return templates_by_status[status_index][variant]()
+    except IndexError:
+        raise ValueError("Invalid status_index or variant")
 
 # --//[INITIAL EMAIL TEMPLATES]\\--
 def initial_email_variant_one(sender_name: str, recipient_name: str, company_name: str, discovery_method: str, linkedin_profile_link: str) -> Tuple[str, str]:

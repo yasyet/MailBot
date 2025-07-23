@@ -1,3 +1,4 @@
+
 # --//[ESSENTIAL IMPORTS]\\--
 import csv
 import os
@@ -30,10 +31,12 @@ class Contact:
         
         raise ValueError("Invalid status value")
         return (False, None)
-    
+
+    # --//[STRING REPRESENTATION]\\--
     def __str__(self):
         return f"{self.FirstName} {self.LastName} ({self.Email}) - {self.Company} - {self.Title} - {self.LinkedIn} - {self.Status}"
     
+    # --//[GET FULL NAME]\\--
     def name(self) -> str:
         """
         Returns the full name of the contact.
@@ -65,7 +68,7 @@ def convertCSVPathToContacts(filePath: str) -> list:
     
     try:
         with open(filePath, mode='r', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=';')        
+            reader = csv.DictReader(csvfile)        
             for i, row in enumerate(reader):
                 try:                        
                     contact = createContact(
