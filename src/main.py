@@ -48,9 +48,9 @@ def main():
     tservice.emptyLine()
 
     # --//[PROCESSING CONTACTS BASED ON SELECTED OPTION]\\--
-    if program_option_selected <= 3:
+    if program_option_selected <= 2:
         mail_service = mservice.MailService()
-        mail_service.send_email_to_contacts(contacts, program_option_selected - 1)
+        mail_service.send_email_to_contacts(contacts, program_option_selected)
 
 if __name__ == "__main__":
     main()

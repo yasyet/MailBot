@@ -1,5 +1,6 @@
 
 # --//[ESSENTIAL IMPORTS]\\--
+from time import sleep
 from dotenv import load_dotenv
 import os
 
@@ -68,6 +69,9 @@ class MailService:
                     print(f"Failed to send email to {contact.name()} at {contact.Email}: {e}")
 
                 variant = (variant + 1) % 5
+                sleep(1.5)
+            else:
+                sleep(0.1)
         
         tservice.emptyLine()
         tservice.header("EMAILS SENT")

@@ -71,7 +71,7 @@ def initial_email_variant_one(sender_name: str, recipient_name: str, company_nam
     <body>
     <div class="container">
         <p>Sehr geehrte/r Herr/Frau {recipient_name},</p>
-        <p>Ich bin auf Sie aufmerksam geworden, weil {discovery_method}.</p>
+        <p>{discovery_method}.</p>
         <p>Mein Name ist {sender_name}. Ich bin darauf spezialisiert, deutschen B2B-Unternehmen wie Ihrem dabei zu helfen, nicht nur qualifizierte Leads zu finden, sondern diese auch direkt in gebuchte Termine für Ihren Vertrieb zu verwandeln. Kurz gesagt: Ich baue Ihre <strong>Vertriebspipeline komplett auf</strong>, von der ersten Kontaktaufnahme bis zum fixen Gespräch.</p>
         <p>Ich bin überzeugt, dass ich Ihnen innerhalb von 72 Stunden nicht nur eine Liste mit potenziellen Neukunden liefern, sondern auch die ersten Schritte zur Terminbuchung für Sie einleiten kann.</p>
         <p>Um den Wert meiner Arbeit zu demonstrieren, würde ich Ihnen gerne eine <strong>kostenlose und unverbindliche Probe von 10 Kontakten</strong> aus Ihrer Zielbranche erstellen und kurz erläutern, wie ich daraus Termine für Sie generiere.</p>
