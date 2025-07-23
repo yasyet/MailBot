@@ -33,6 +33,12 @@ class Contact:
     
     def __str__(self):
         return f"{self.FirstName} {self.LastName} ({self.Email}) - {self.Company} - {self.Title} - {self.LinkedIn} - {self.Status}"
+    
+    def name(self) -> str:
+        """
+        Returns the full name of the contact.
+        """
+        return f"{self.FirstName} {self.LastName}"
 
 def createContact(_Company, _FirstName, _LastName, _Email, _Title, _LinkedIn, _Status) -> Contact:
     """

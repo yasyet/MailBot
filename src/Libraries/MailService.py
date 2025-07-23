@@ -8,3 +8,13 @@ import os
 from email.message import EmailMessage
 from pathlib import Path
 import smtplib
+
+# --//[MAIL SERVICE CLASS]\\--
+class MailService:
+    def __init__(self):
+        load_dotenv()
+        self.smtp_server = os.getenv("SMTP_SERVER")
+        self.smtp_port = int(os.getenv("SMTP_PORT"))
+        self.smtp_user = os.getenv("SMTP_USER")
+        self.smtp_password = os.getenv("SMTP_PASSWORD")
+

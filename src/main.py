@@ -34,10 +34,11 @@ def main():
     contacts = sservice.convertCSVPathToContacts(csv_file_path)
     tservice.emptyLine()
     print(f"Found {len(contacts)} contacts in the CSV file: {csv_file_path}")
+    print(f"First contact: {contacts[0].name()}")
     tservice.emptyLine()
-    print("First 5 contacts:")
-    for contact in contacts[:5]:
-        print(f" - {contact}")
+
+    def 
+
 
 if __name__ == "__main__":
     main()
