@@ -11,18 +11,18 @@ def get_email_template(status_index: int, contact: Contact, variant: int, sender
 
     initial_templates = [
         lambda: initial_email_variant_one(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
-        lambda: initial_email_variant_two(sender_name, recipient_name, discovery_method, linkedin_profile_link),
-        lambda: initial_email_variant_three(sender_name, recipient_name, discovery_method, linkedin_profile_link),
+        lambda: initial_email_variant_two(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
+        lambda: initial_email_variant_three(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
         lambda: initial_email_variant_four(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
         lambda: initial_email_variant_five(sender_name, recipient_name, company_name, discovery_method, linkedin_profile_link),
     ]
 
     follow_up_one_templates = [
-        lambda: follow_up_one_variant_one(sender_name, recipient_name, company_name, contact.Status, linkedin_profile_link),
+        lambda: follow_up_one_variant_one(sender_name, recipient_name, company_name, linkedin_profile_link),
         lambda: follow_up_one_variant_two(sender_name, recipient_name, company_name, linkedin_profile_link),
-        lambda: follow_up_one_variant_three(sender_name, recipient_name, linkedin_profile_link),
+        lambda: follow_up_one_variant_three(sender_name, recipient_name, company_name, linkedin_profile_link),
         lambda: follow_up_one_variant_four(sender_name, recipient_name, company_name, linkedin_profile_link),
-        lambda: follow_up_one_variant_five(sender_name, recipient_name, linkedin_profile_link),
+        lambda: follow_up_one_variant_five(sender_name, recipient_name, company_name, linkedin_profile_link),
     ]
 
     follow_up_two_templates = [
@@ -49,7 +49,7 @@ def initial_email_variant_one(sender_name: str, recipient_name: str, company_nam
     """
     Initial email template 1/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         discovery_method (str): How you became aware of the person/company.
@@ -85,18 +85,19 @@ def initial_email_variant_one(sender_name: str, recipient_name: str, company_nam
     """
     return subject, body
 
-def initial_email_variant_two(sender_name: str, recipient_name: str, discovery_method: str, linkedin_profile_link: str) -> Tuple[str, str]:
+def initial_email_variant_two(sender_name: str, recipient_name: str, company_name: str, discovery_method: str, linkedin_profile_link: str) -> Tuple[str, str]:
     """
     Initial email template 2/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
+        company_name (str): The name of the recipient's company.
         discovery_method (str): How you became aware of the person/company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
     Returns:
         Tuple[str, str]: A tuple containing the subject and the HTML body of the email.
     """
-    subject = f"Neue Kunden, fix & fertig: Eine Frage an {recipient_name}"
+    subject = f"Neue Kunden, fix & fertig für {company_name}"
     body = f"""
     <!DOCTYPE html>
     <html>
@@ -124,18 +125,19 @@ def initial_email_variant_two(sender_name: str, recipient_name: str, discovery_m
     """
     return subject, body
 
-def initial_email_variant_three(sender_name: str, recipient_name: str, discovery_method: str, linkedin_profile_link: str) -> Tuple[str, str]:
+def initial_email_variant_three(sender_name: str, recipient_name: str, company_name: str, discovery_method: str, linkedin_profile_link: str) -> Tuple[str, str]:
     """
     Initial email template 3/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
+        company_name (str): The name of the recipient's company.
         discovery_method (str): How you became aware of the person/company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
     Returns:
         Tuple[str, str]: A tuple containing the subject and the HTML body of the email.
     """
-    subject = f"Direkte Termine für Ihren Vertrieb durch Lead-Spezialist {sender_name}"
+    subject = f"Direkte Termine für Ihren Vertrieb ({company_name})"
     body = f"""
     <!DOCTYPE html>
     <html>
@@ -167,7 +169,7 @@ def initial_email_variant_four(sender_name: str, recipient_name: str, company_na
     """
     Initial email template 4/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         discovery_method (str): How you became aware of the person/company.
@@ -207,7 +209,7 @@ def initial_email_variant_five(sender_name: str, recipient_name: str, company_na
     """
     Initial email template 5/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         discovery_method (str): How you became aware of the person/company.
@@ -245,14 +247,13 @@ def initial_email_variant_five(sender_name: str, recipient_name: str, company_na
 
 
 # --//[FOLLOW UP ONE EMAIL TEMPLATES]\\--
-def follow_up_one_variant_one(sender_name: str, recipient_name: str, company_name: str, initial_send_date: str, linkedin_profile_link: str) -> Tuple[str, str]:
+def follow_up_one_variant_one(sender_name: str, recipient_name: str, company_name: str, linkedin_profile_link: str) -> Tuple[str, str]:
     """
     Follow-up 1, variant 1/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
-        initial_send_date (str): The date the initial email was sent.
         linkedin_profile_link (str): Your LinkedIn profile URL.
     Returns:
         Tuple[str, str]: A tuple containing the subject and the HTML body of the email.
@@ -271,7 +272,7 @@ def follow_up_one_variant_one(sender_name: str, recipient_name: str, company_nam
     <body>
     <div class="container">
         <p>Sehr geehrte/r Herr/Frau {recipient_name},</p>
-        <p>ich wollte nur kurz nachfragen, ob meine letzte E-Mail vom {initial_send_date} bei Ihnen angekommen ist.</p>
+        <p>ich wollte nur kurz nachfragen, ob meine letzte E-Mail bei Ihnen angekommen ist.</p>
         <p>Ich hatte Ihnen angeboten, eine kostenlose Probe von 10 Kontakten für Ihr Unternehmen zu erstellen und kurz zu zeigen, wie ich diese Leads direkt in <strong>fertige Termine für Sie umwandle</strong>.</p>
         <p>Haben Sie vielleicht doch 15 Minuten Zeit, um das kurz zu besprechen?</p>
         <p>Mit freundlichen Grüßen,</p>
@@ -287,7 +288,7 @@ def follow_up_one_variant_two(sender_name: str, recipient_name: str, company_nam
     """
     Follow-up 1, variant 2/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
@@ -320,17 +321,18 @@ def follow_up_one_variant_two(sender_name: str, recipient_name: str, company_nam
     """
     return subject, body
 
-def follow_up_one_variant_three(sender_name: str, recipient_name: str, linkedin_profile_link: str) -> Tuple[str, str]:
+def follow_up_one_variant_three(sender_name: str, recipient_name: str, company_name: str, linkedin_profile_link: str) -> Tuple[str, str]:
     """
     Follow-up 1, variant 3/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
+        company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
     Returns:
         Tuple[str, str]: A tuple containing the subject and the HTML body of the email.
     """
-    subject = f"AW: Neue Kunden, fix & fertig: Eine Frage an {recipient_name}"
+    subject = f"AW: Neue Kunden, fix & fertig für {company_name}"
     body = f"""
     <!DOCTYPE html>
     <html>
@@ -360,7 +362,7 @@ def follow_up_one_variant_four(sender_name: str, recipient_name: str, company_na
     """
     Follow-up 1, variant 4/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
@@ -393,17 +395,18 @@ def follow_up_one_variant_four(sender_name: str, recipient_name: str, company_na
     """
     return subject, body
 
-def follow_up_one_variant_five(sender_name: str, recipient_name: str, linkedin_profile_link: str) -> Tuple[str, str]:
+def follow_up_one_variant_five(sender_name: str, recipient_name: str, company_name: str, linkedin_profile_link: str) -> Tuple[str, str]:
     """
     Follow-up 1, variant 5/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
+        company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
     Returns:
         Tuple[str, str]: A tuple containing the subject and the HTML body of the email.
     """
-    subject = "Ihr Feedback zu meinem Angebot für volle Kalender"
+    subject = f"Ihr Feedback zu meinem Angebot für {company_name}"
     body = f"""
     <!DOCTYPE html>
     <html>
@@ -435,7 +438,7 @@ def follow_up_two_variant_one(sender_name: str, recipient_name: str, company_nam
     """
     Follow-up 2, variant 1/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
@@ -468,17 +471,18 @@ def follow_up_two_variant_one(sender_name: str, recipient_name: str, company_nam
     """
     return subject, body
 
-def follow_up_two_variant_two(sender_name: str, recipient_name: str, linkedin_profile_link: str) -> Tuple[str, str]:
+def follow_up_two_variant_two(sender_name: str, recipient_name: str, company_name: str, linkedin_profile_link: str) -> Tuple[str, str]:
     """
     Follow-up 2, variant 2/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
+        company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
     Returns:
         Tuple[str, str]: A tuple containing the subject and the HTML body of the email.
     """
-    subject = "Schnelle Frage – Gebuchte B2B-Termine"
+    subject = f"Schnelle Frage – Gebuchte B2B-Termine für {company_name}"
     body = f"""
     <!DOCTYPE html>
     <html>
@@ -508,7 +512,7 @@ def follow_up_two_variant_three(sender_name: str, recipient_name: str, company_n
     """
     Follow-up 2, variant 3/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
@@ -545,7 +549,7 @@ def follow_up_two_variant_four(sender_name: str, recipient_name: str, company_na
     """
     Follow-up 2, variant 4/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.
@@ -582,7 +586,7 @@ def follow_up_two_variant_five(sender_name: str, recipient_name: str, company_na
     """
     Follow-up 2, variant 5/5.
     Args:
-        sender_name (str): The name of the sender (e.g., "Yasin Holzenkaempfer").
+        sender_name (str): The name of the sender (e.g., "Yasin Holzenkämpfer").
         recipient_name (str): The last name of the recipient.
         company_name (str): The name of the recipient's company.
         linkedin_profile_link (str): Your LinkedIn profile URL.

@@ -1,4 +1,3 @@
-
 # --//[ESSENTIAL IMPORTS]\\--
 import csv
 import os
@@ -31,6 +30,21 @@ class Contact:
         
         raise ValueError("Invalid status value")
         return (False, None)
+    
+    def setStatus(self, new_status: int) -> None:
+        """
+        Sets the status of the contact based on the provided index.
+        
+        :param new_status: The new status index to set.
+        """
+        if new_status == 0:
+            self.Status = "-"
+        elif new_status == 1:
+            self.Status = "1."
+        elif new_status == 2:
+            self.Status = "2."
+        else:
+            raise ValueError("Invalid status index")
 
     # --//[STRING REPRESENTATION]\\--
     def __str__(self):
@@ -68,7 +82,7 @@ def convertCSVPathToContacts(filePath: str) -> list:
     
     try:
         with open(filePath, mode='r', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)        
+            reader = csv.DictReader(csvfile, delimiter=';')        
             for i, row in enumerate(reader):
                 try:                        
                     contact = createContact(
@@ -123,3 +137,24 @@ def appendContactsToCSV(filePath: str, contacts: list) -> None:
             })
     
     return None
+
+# --//[OVERWRITE CSV FILE WITH CONTACTS]\\--
+def overwriteCSV(filePath: str, contacts: list) -> None:
+    """
+    Overwrites the specified CSV file with the provided list of contacts.
+    """
+    with open(filePath, mode='w', encoding='utf-8', newline='') as csvfile:
+        fieldnames = ['Company', 'First Name', 'Last Name', 'Email', 'Title', 'LinkedIn', 'Status']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
+        writer.writeheader()
+
+        for contact in contacts:
+            writer.writerow({
+                'Company': contact.Company,
+                'First Name': contact.FirstName,
+                'Last Name': contact.LastName,
+                'Email': contact.Email,
+                'Title': contact.Title,
+                'LinkedIn': contact.LinkedIn,
+                'Status': contact.Status
+            })

@@ -50,7 +50,16 @@ def main():
     # --//[PROCESSING CONTACTS BASED ON SELECTED OPTION]\\--
     if program_option_selected <= 2:
         mail_service = mservice.MailService()
-        mail_service.send_email_to_contacts(contacts, program_option_selected)
+        changed_contacts = mail_service.send_email_to_contacts(contacts, program_option_selected) # Sends emails based on the selected option
+
+    # --//[OVERWRITE CSV FILE WITH CHANGED CONTACTS]\\--
+    if changed_contacts:
+        for contact in changed_contacts:
+            print(f"Contact: {contact.name()} - Status: {contact.getStatus()[1]}")
+        sservice.overwriteCSV(csv_file_path, changed_contacts)
+        tservice.emptyLine()
+        tservice.header("CHANGED CONTACTS SAVED")
+        tservice.emptyLine()
 
 if __name__ == "__main__":
     main()
