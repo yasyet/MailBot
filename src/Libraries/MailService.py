@@ -7,6 +7,7 @@ import os
 import Libraries.FileService as fservice
 import Libraries.Templates as templates
 import Libraries.TerminalService as tservice
+from Libraries.AIService import AIAgent
 from email.message import EmailMessage
 from email.header import Header
 from email.utils import formataddr
@@ -42,7 +43,7 @@ class MailService:
             server.send_message(msg)
     
     # --//[SENDING EMAIL TO CONTACTS]\\--
-    def send_email_to_contacts(self, contacts: list, status_index: int) -> list:
+    def send_email_to_contacts(self, contacts: list, status_index: int, ai_agent: AIAgent, messages: list[dict]) -> list:
         """
         Sends an email to each contact in the list with the specified status.
         
@@ -60,12 +61,15 @@ class MailService:
             can_send, email_status = contact.getStatus() # status 0 = sending first email, 1 = sending second email, 2 = sending third email
 
             if can_send and email_status == status_index:
+                # --//[GENERATE DISCOVERY METHOD USING AI AGENT]\\--
+                discovery_method = ai_agent.chat(messages)
+
                 subject, body = templates.get_email_template(
                     status_index=status_index,
                     contact=contact,
                     variant=variant,
                     sender_name=self.mail_name,
-                    discovery_method="Hier wird später ein KI Text stehen",
+                    discovery_method=discovery_method,
                     linkedin_profile_link=self.linkedin_profile_link
                 )
 

@@ -7,6 +7,7 @@ import Libraries.TerminalService as tservice
 import Libraries.FileService as fservice
 import Libraries.SheetService as sservice
 import Libraries.MailService as mservice
+import Libraries.AIService as aiservice
 
 # --//[CODE STARTS HERE]\\--
 def main():
@@ -49,8 +50,27 @@ def main():
 
     # --//[PROCESSING CONTACTS BASED ON SELECTED OPTION]\\--
     if program_option_selected <= 2:
+        # --//[SETUP AI AGENT]\\--
+        ai_agent = aiservice.AIAgent(
+            _model="TODO", #TODO: Replace with actual model name
+            _temperature=1.2,
+            _max_tokens=80
+        )
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant that generates personalized email content."
+            },
+            {
+                "role": "user",
+                "content": "Generate a personalized email for the contact based on their profile."
+            }
+        ] #TODO: Replace with actual messages
+
+        # --//[SETUP MAIL SERVICE]\\--
         mail_service = mservice.MailService()
-        changed_contacts = mail_service.send_email_to_contacts(contacts, program_option_selected) # Sends emails based on the selected option
+
+        changed_contacts = mail_service.send_email_to_contacts(contacts, program_option_selected, ai_agent, messages) # Sends emails based on the selected option
 
     # --//[OVERWRITE CSV FILE WITH CHANGED CONTACTS]\\--
     if changed_contacts:
