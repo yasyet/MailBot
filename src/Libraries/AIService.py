@@ -1,38 +1,52 @@
-
 # --//[ESSENTIAL IMPORTS]\\--
 import os
 from dotenv import load_dotenv
+import google.generativeai as genai
 
-# --//[LIBRARY IMPORTS]\\--
-import openai
 
 # --//[AI CLASS]\\--
 class AIAgent:
-    def __init__(self, _model: str, _temperature: float = 1.2, _max_tokens: int = 80):
-        # --//|SETUP OPENAI CLIENT|--\\--
-        self.client = openai.Client()
-        self.model = _model
-        self.temperature = _temperature
-        self.max_tokens = _max_tokens
-
-        # --//|LOAD DOTENV ENVIRONMENT VARIABLES|--\\--
-        load_dotenv()
-        self.api_key = os.getenv("OPENAI_API_KEY")
-
-    def chat(self, messages: list[dict]) -> str:
+    def __init__(self, model: str = "gemini-2.5-flash-lite", temperature: float = 1.0, max_output_tokens: int = 80):
         """
-        Sends a chat message to the OpenAI API and returns the response.
+        Initialize Gemini AI client.
         
-        :param messages: List of messages to send to the AI.
-        :return: The AI's response as a string.
+        :param model: Gemini model name
+        :param temperature: Controls randomness
+        :param max_output_tokens: Max tokens in response
+        """
+        load_dotenv()
+        api_key = os.getenv("GEMINI_API_KEY")
+
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY not found in .env file")
+
+        genai.configure(api_key=api_key)
+        self.model = model
+        self.temperature = temperature
+        self.max_output_tokens = max_output_tokens
+
+    def chat(self, prompt: str) -> str:
+        """
+        Sends a single prompt to Gemini API and returns response text.
+        
+        :param prompt: The user input string.
+        :return: AI response as text.
         """
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                temperature=self.temperature,
-                max_tokens=self.max_tokens,
-                messages=messages
+            model_instance = genai.GenerativeModel(self.model)
+            response = model_instance.generate_content(
+                contents=prompt,
+                generation_config={
+                    "temperature": self.temperature,
+                    "max_output_tokens": self.max_output_tokens
+                }
             )
-            return response.choices[0].message['content']
+            return response.text.strip()
         except Exception as e:
             return f"Error: {str(e)}"
+
+
+# --//[EXAMPLE USAGE]\\--
+if __name__ == "__main__":
+    agent = AIAgent()
+    print(agent.chat("Write a short poem about the ocean."))
